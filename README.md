@@ -1,6 +1,7 @@
 # Chatbot for Ooredoo customers
 
 ## Project Structure
+```
 project_root/
   |
   ├── app/
@@ -29,3 +30,4 @@ project_root/
   └── README.md              # Documentation
 
 ---
+```

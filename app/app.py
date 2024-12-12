@@ -2,6 +2,7 @@ from fastapi import FastAPI, APIRouter
 import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
 from config import settings, pinecone
+from rag_workflow import query_rag_endpoint
 
 # Initialize FastAPI
 app = FastAPI()
@@ -33,6 +34,7 @@ def health_check():
 
 # Add routes to the app
 app.include_router(router)
+app.include_router(query_rag_endpoint)
 logging.info("Routes added to FastAPI application.")
 
 if __name__ == "__main__":

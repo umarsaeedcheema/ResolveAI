@@ -1,0 +1,6 @@
+2024-12-12 15:23:29,935 - INFO - Parsing PDF: data/raw/https:www.ooredoo.qa:web:wp-content:uploads:2024:01:SMS-Policy-External_Version.pdf
+2024-12-12 15:23:30,019 - INFO - Parsing PDF: data/raw/https:www.ooredoo.qa:web:wp-content:uploads:2024:05:QHSE-Management-Systems-Policy.pdf
+2024-12-12 15:23:30,146 - INFO - Parsing PDF: data/raw/https:www.ooredoo.qa:web:wp-content:uploads:2022:03:bcm-policy-external.pdf
+2024-12-12 15:23:30,215 - INFO - Parsing PDF: data/raw/https:www.ooredoo.qa:web:wp-content:uploads:2024:01:Information-Security-Policy-external_version.pdf
+2024-12-12 15:23:30,643 - INFO - Parsing PDF: data/raw/Vulnerability Disclosure Policy and Submission Form | Ooredoo Vulnerability Disclosure Policy.pdf
+2024-12-12 15:23:30,716 - INFO - Processed data saved to data/processed/processed_pdfs.json

@@ -1,0 +1,4 @@
+# Specify Python version requirement
+beautifulsoup4==4.12.2
+requests==2.31.0
+PyPDF2==3.0.0

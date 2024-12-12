@@ -1,5 +1,18 @@
 # Chatbot for Ooredoo customers
 
+
+
+## Installation
+
+### Create a virtual environment
+
+### Install the required packages
+
+```bash
+pip install -r requirements.txt
+```
+
+
 ## Project Structure
 ```
 project_root/

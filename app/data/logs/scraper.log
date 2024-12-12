@@ -1,0 +1,4 @@
+2024-12-12 15:08:03,121 - INFO - Scraping URL: https://selfcare.ooredoo.qa/en/consumer/help-centre
+2024-12-12 15:08:05,696 - INFO - Data saved to data/raw/customer_support_data.json
+2024-12-12 15:08:05,697 - ERROR - Error parsing PDF data/raw/example_policy.pdf: [Errno 2] No such file or directory: 'data/raw/example_policy.pdf'
+2024-12-12 15:08:05,697 - ERROR - Error parsing HTML data/raw/example_page.html: [Errno 2] No such file or directory: 'data/raw/example_page.html'

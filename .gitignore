@@ -1,1 +1,19 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore environment configuration
 .env
+
+# Ignore virtual environment
+rag-bot/
+
+# Ignore build and deployment artifacts
+dist/
+build/
+*.egg-info/

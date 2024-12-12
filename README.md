@@ -4,10 +4,11 @@
 ```
 project_root/
   ├── app/
-  │   ├── __init__.py         # Initialize FASTAPI app
+  │   ├── app.py         # Initialize FASTAPI app
+  |   |-- config.py
   │   ├── routes.py           # Define API routes (to expose LangChain pipelines)
   │   ├── scraper_service.py  # Data scraping logic
-  │   ├── langchain_pipeline.py # LangChain RAG logic
+  │   ├── rag_pipeline.py     # LangChain RAG logic
   │   └── data/               # Directory for scraped and processed data
   │       ├── raw/            # Raw scraped data
   │       ├── processed/      # Cleaned and chunked data

@@ -34,13 +34,11 @@ uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 project_root/
   ├── app/
   │   ├── app.py         # Initialize FASTAPI app
-  |   |-- config.py
-  │   ├── routes.py           # Define API routes (to expose LangChain pipelines)
-  │   ├── scraper_service.py  # Data scraping logic
-  │   ├── rag_pipeline.py     # LangChain RAG logic
+  │   ├── config.py
+  │   ├── routes/             # Define API routes (to expose LangChain pipelines)
+  |   |   └--add_data.py
+  |   |   └--rag_workflow.py       
   │   └── data/               # Directory for scraped and processed data
-  │       ├── raw/            # Raw scraped data
-  │       ├── processed/      # Cleaned and chunked data
   │       └── logs/           # Logs for monitoring
   |
   ├── streamlit_app/

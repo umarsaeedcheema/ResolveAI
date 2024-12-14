@@ -2,7 +2,8 @@ from fastapi import FastAPI, APIRouter
 import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
 from config import settings, pinecone
-from rag_workflow import query_rag_endpoint
+from routes.rag_workflow import query_rag_endpoint
+from routes.add_data import add_data_endpoint
 
 # Initialize FastAPI
 app = FastAPI()
@@ -17,7 +18,7 @@ def health_check():
     try:
         # Test Pinecone connection
         logging.info("Testing Pinecone connection...")
-        pinecone.list_indexes()
+        print(pinecone.list_indexes())
         logging.info("Pinecone connection successful.")
 
         # Test OpenAI API key
@@ -35,6 +36,7 @@ def health_check():
 # Add routes to the app
 app.include_router(router)
 app.include_router(query_rag_endpoint)
+app.include_router(add_data_endpoint)
 logging.info("Routes added to FastAPI application.")
 
 if __name__ == "__main__":

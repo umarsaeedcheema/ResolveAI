@@ -4,7 +4,8 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import pytesseract
-from config import settings, pinecone
+from PyPDF2 import PdfReader
+from config import settings, pinecone, pinecone_index
 import os
 
 # Initialize Router
@@ -20,7 +21,11 @@ except Exception as e:
 
 # Initialize Pinecone VectorStore
 try:
-    vector_store = Pinecone(embeddings.embed_query, settings.pinecone_index_name, text_key="content")
+    vector_store = Pinecone(
+    index=pinecone_index,
+    embedding_function=embeddings.embed_query,
+    text_key="content"
+)
     logging.info("Pinecone VectorStore initialized successfully.")
 except Exception as e:
     logging.error(f"Failed to initialize Pinecone VectorStore: {e}")
@@ -52,7 +57,7 @@ def parse_and_chunk_image(file_path):
     return [{"content": chunk, "file": file_path} for chunk in chunks]
 
 # Generic endpoint to add data to Pinecone
-@add_data_endpoint.post("/add-data")
+@add_data_endpoint.post("/add_data")
 def add_data_to_pinecone(file: UploadFile = File(...)):
     try:
         logging.info(f"Uploading and processing file: {file.filename}")

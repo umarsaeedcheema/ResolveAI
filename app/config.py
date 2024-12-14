@@ -37,7 +37,7 @@ try:
     
      # Check if index exists
     index_name = settings.pinecone_index_name
-    print(pc.list_indexes())
+    # print(pc.list_indexes())
     if index_name not in pc.list_indexes()[0].name:
         raise ValueError(f"Pinecone index '{index_name}' does not exist in environment '{settings.pinecone_environment}'.")
 

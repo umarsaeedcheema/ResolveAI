@@ -3,7 +3,8 @@ import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 from pydantic import BaseModel
-from config import settings, pinecone
+from config import settings, pinecone, pinecone_index
+
 
 # Initialize Router
 query_rag_endpoint = APIRouter()
@@ -18,7 +19,11 @@ except Exception as e:
 
 # Initialize Pinecone VectorStore
 try:
-    vector_store = Pinecone(embeddings.embed_query, settings.pinecone_index_name)
+    vector_store = Pinecone(
+    index=pinecone_index,
+    embedding_function=embeddings.embed_query,
+    text_key="content"
+)
     logging.info("Pinecone VectorStore initialized successfully.")
 except Exception as e:
     logging.error(f"Failed to initialize Pinecone VectorStore: {e}")

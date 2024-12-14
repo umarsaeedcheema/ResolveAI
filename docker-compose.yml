@@ -12,8 +12,8 @@ services:
       - pinecone_api_key
       - pinecone_environment
       - pinecone_index_name
-    volumes:
-      - ./app:/app  # Bind the app folder to the container
+    networks:
+      - app-network
 
   frontend:
     build:
@@ -23,5 +23,12 @@ services:
       - "8501:8501"
     depends_on:
       - backend
-    volumes:
-      - ./streamlit_app:/app  # Bind the frontend folder to the container
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - BACKEND_URL=http://backend:8000  # Pass backend URL as an environment variable
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

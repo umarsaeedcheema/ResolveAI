@@ -1,9 +1,12 @@
 import streamlit as st
 import requests
+import os
 
-# FastAPI backend URLs
-QUERY_API_URL = "http://127.0.0.1:8000/query"
-ADD_DATA_API_URL = "http://127.0.0.1:8000/add_data"
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+
+QUERY_API_URL = f"{BACKEND_URL}/query"
+ADD_DATA_API_URL = f"{BACKEND_URL}/add_data"
+
 
 # Simulated admin credentials (for simplicity; use secure methods in production)
 ADMIN_CREDENTIALS = {"username": "admin", "password": "admin123"}

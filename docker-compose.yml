@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - openai_api_key
+      - pinecone_api_key
+      - pinecone_environment
+      - pinecone_index_name
+    volumes:
+      - ./app:/app  # Bind the app folder to the container
+
+  frontend:
+    build:
+      context: ./streamlit_app
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    volumes:
+      - ./streamlit_app:/app  # Bind the frontend folder to the container

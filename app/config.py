@@ -44,7 +44,7 @@ try:
     logging.info(f"Successfully connected to Pinecone index: {index_name}")
 
 except Exception as e:
-    logging.error(f"Failed to initialize Pinecone client or index: {e}")
+    logging.error(f"Failed to initialize Pinecone: {e}")
     raise
 
 pinecone_index = index

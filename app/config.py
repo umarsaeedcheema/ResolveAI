@@ -1,8 +1,9 @@
-# config.py
 import os
 import logging
 import pinecone
 from pydantic import BaseSettings
+from pinecone import Pinecone
+
 
 # Logging setup
 logging.basicConfig(
@@ -29,10 +30,21 @@ logging.info("Configuration loaded successfully.")
 # Initialize Pinecone
 try:
     logging.info("Initializing Pinecone client...")
-    pinecone.init(
-        api_key=settings.pinecone_api_key,
-        environment=settings.pinecone_environment,
+    pc = Pinecone(
+        api_key=settings.pinecone_api_key
     )
     logging.info("Pinecone client initialized successfully.")
+    
+     # Check if index exists
+    index_name = settings.pinecone_index_name
+    # print(pc.list_indexes())
+    if index_name not in pc.list_indexes()[0].name:
+        raise ValueError(f"Pinecone index '{index_name}' does not exist in environment '{settings.pinecone_environment}'.")
+
+    # Connect to the index
+    pinecone_index = pc.Index(index_name)
+    logging.info(f"Successfully connected to Pinecone index: {index_name}")
+
 except Exception as e:
-    logging.error(f"Failed to initialize Pinecone client: {e}")
+    logging.error(f"Failed to initialize Pinecone: {e}")
+    raise

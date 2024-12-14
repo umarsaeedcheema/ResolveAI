@@ -3,8 +3,9 @@ import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from PyPDF2 import PdfReader
 import pytesseract
-from config import settings, pinecone
+from config import settings, pinecone, pinecone_index
 import os
 
 # Initialize Router
@@ -16,15 +17,19 @@ try:
     logging.info("OpenAI Embeddings initialized successfully.")
 except Exception as e:
     logging.error(f"Failed to initialize OpenAI Embeddings: {e}")
-    raise
+    raise HTTPException(status_code=500, detail="Failed to initialize OpenAI Embeddings.")
 
 # Initialize Pinecone VectorStore
 try:
-    vector_store = Pinecone(embeddings.embed_query, settings.pinecone_index_name, text_key="content")
+    vector_store = Pinecone(
+        index=pinecone_index,
+        embedding_function=embeddings.embed_query,
+        text_key="content"
+    )
     logging.info("Pinecone VectorStore initialized successfully.")
 except Exception as e:
     logging.error(f"Failed to initialize Pinecone VectorStore: {e}")
-    raise
+    raise HTTPException(status_code=500, detail="Failed to initialize Pinecone VectorStore.")
 
 # Helper functions for semantic chunking
 def parse_and_chunk_pdf(file_path):
@@ -52,7 +57,7 @@ def parse_and_chunk_image(file_path):
     return [{"content": chunk, "file": file_path} for chunk in chunks]
 
 # Generic endpoint to add data to Pinecone
-@add_data_endpoint.post("/add-data")
+@add_data_endpoint.post("/add_data")
 def add_data_to_pinecone(file: UploadFile = File(...)):
     try:
         logging.info(f"Uploading and processing file: {file.filename}")
@@ -67,7 +72,7 @@ def add_data_to_pinecone(file: UploadFile = File(...)):
         with open(temp_path, "wb") as temp_file:
             temp_file.write(content)
 
-        # Process based on file type
+        # Process file and generate chunks
         if file_extension in [".pdf"]:
             parsed_content = parse_and_chunk_pdf(temp_path)
         elif file_extension in [".txt"]:
@@ -78,10 +83,22 @@ def add_data_to_pinecone(file: UploadFile = File(...)):
             logging.warning("Unsupported file type.")
             raise HTTPException(status_code=400, detail="Unsupported file type.")
 
-        # Add parsed content to Pinecone
+        # Embed and add chunks to Pinecone
         for chunk in parsed_content:
-            vector_store.add_texts([chunk["content"]], metadata={"file": chunk["file"]})
-            logging.info(f"Added content from {chunk['file']} to Pinecone.")
+            try:
+                # Generate embedding for each chunk
+                embedding = embeddings.embed_query(chunk["content"])
+                # Store embedding in Pinecone
+                pinecone_index.upsert([
+                    {
+                        "id": f"{chunk['file']}_{parsed_content.index(chunk)}",  # Unique ID for each chunk
+                        "values": embedding,  # Embedding vector
+                        "metadata": {"content": chunk["content"], "file": chunk["file"]},
+                    }
+                ])
+                logging.info(f"Added chunk to Pinecone: {chunk['file']}, {chunk['content'][:50]}...")
+            except Exception as e:
+                logging.error(f"Failed to add chunk to Pinecone: {e}")
 
         # Clean up temporary file
         os.remove(temp_path)

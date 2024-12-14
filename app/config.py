@@ -1,4 +1,3 @@
-# config.py
 import os
 import logging
 import pinecone
@@ -34,5 +33,18 @@ try:
         environment=settings.pinecone_environment,
     )
     logging.info("Pinecone client initialized successfully.")
+    
+     # Check if index exists
+    index_name = settings.pinecone_index_name
+    if index_name not in pinecone.list_indexes():
+        raise ValueError(f"Pinecone index '{index_name}' does not exist in environment '{settings.pinecone_environment}'.")
+
+    # Connect to the index
+    pinecone_index = pinecone.Index(index_name)
+    logging.info(f"Successfully connected to Pinecone index: {index_name}")
+
 except Exception as e:
-    logging.error(f"Failed to initialize Pinecone client: {e}")
+    logging.error(f"Failed to initialize Pinecone client or index: {e}")
+    raise
+
+pinecone_index = index

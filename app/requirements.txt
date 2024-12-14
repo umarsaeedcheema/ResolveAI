@@ -17,3 +17,4 @@ loguru==0.6.0
 pytesseract
 python-multipart
 pinecone
+PyPDF2

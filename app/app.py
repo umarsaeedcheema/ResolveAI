@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter
 import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
-from config import settings, pinecone
+from config import settings, pc
 from routes.rag_workflow import query_rag_endpoint
 from routes.add_data import add_data_endpoint
 
@@ -18,7 +18,7 @@ def health_check():
     try:
         # Test Pinecone connection
         logging.info("Testing Pinecone connection...")
-        print(pinecone.list_indexes())
+        print(pc.list_indexes())
         logging.info("Pinecone connection successful.")
 
         # Test OpenAI API key

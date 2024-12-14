@@ -14,13 +14,7 @@ python-dotenv==1.0.0
 # Logging
 loguru==0.6.0
 
-# Frontend
-streamlit==1.25.0
-
-# Optional for testing and linting
-pytest==7.3.1
-black==23.3.0
-
 pytesseract
 python-multipart
 pinecone
+PyPDF2

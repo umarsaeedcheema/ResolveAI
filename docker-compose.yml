@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - openai_api_key
+      - pinecone_api_key
+      - pinecone_environment
+      - pinecone_index_name
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./streamlit_app
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - BACKEND_URL=http://backend:8000  # Pass backend URL as an environment variable
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

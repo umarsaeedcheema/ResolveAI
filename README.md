@@ -41,14 +41,15 @@ Go into app and streamlit_ui folders and run :
 pip install -r requirements.txt
 ```
 
-4. Setup API Keys 
+4. Setup API Keys
 
-    1. Copy .env.example to .env
+Copy .env.example to .env
 ```bash
 cp .env.example .env
 ```
 
-    2. Add the following API Keys to the env
+Add the following API Keys to the env
+
 ```bash
 openai_api_key=your_openai_api_key_here
 pinecone_api_key=your_pinecone_api_key_here

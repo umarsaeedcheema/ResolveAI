@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ```
 
 4. Setup API Keys 
-    1. Copy .env.example to .env
+  1. Copy .env.example to .env
 ```bash
 cp .env.example .env
 ```

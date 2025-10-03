@@ -24,8 +24,8 @@ This project implements a chatbot for Ooredoo customers using Retrieval-Augmente
 ## Installation
 1. Clone the Repository
 ```bash
-git clone <your-repo-url>
-cd <project-directory>
+git clone git@github.com:umarsaeedcheema/ResolveAI.git
+cd ResolveAI
 ```
 2. Create a virtual environment
 ``` bash

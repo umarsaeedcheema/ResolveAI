@@ -1,6 +1,6 @@
-# Chatbot for Ooredoo customers
+# Chatbot for customers
 
-This project implements a chatbot for Ooredoo customers using Retrieval-Augmented Generation (RAG). The chatbot allows users to ask questions about uploaded documents or general information by integrating FastAPI for the backend, Streamlit for the frontend, and LangChain for the RAG pipeline. The project also uses Docker for containerization and supports deployment on AWS EC2 with a CI/CD pipeline.
+This project implements a chatbot for customers using Retrieval-Augmented Generation (RAG). The chatbot allows users to ask questions about uploaded documents or general information by integrating FastAPI for the backend, Streamlit for the frontend, and LangChain for the RAG pipeline. The project also uses Docker for containerization and supports deployment on AWS EC2 with a CI/CD pipeline.
 
 ## Table of Contents
 

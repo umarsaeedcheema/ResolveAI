@@ -62,7 +62,7 @@ def admin_page():
 
 # Chatbot Page
 def chatbot_page():
-    st.title("Ooredoo Chatbot")
+    st.title("Chatbot")
     st.write("Ask your questions and get answers powered by RAG!")
 
     # Chat interface

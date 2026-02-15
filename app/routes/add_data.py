@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
 import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Pinecone
+from pinecone import Pinecone
+from langchain_pinecone import PineconeVectorStore
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from PyPDF2 import PdfReader
-import pytesseract
-from config import settings, pinecone, pinecone_index
+from config import settings, index_name
 import os
 
 # Initialize Router
@@ -21,10 +21,12 @@ except Exception as e:
 
 # Initialize Pinecone VectorStore
 try:
-    vector_store = Pinecone(
-        index=pinecone_index,
-        embedding_function=embeddings.embed_query,
-        text_key="content"
+    pc = Pinecone(api_key=settings.pinecone_api_key)
+    index = pc.Index(index_name)
+
+    vector_store = PineconeVectorStore(
+        index=index,
+        embedding=embeddings,
     )
     logging.info("Pinecone VectorStore initialized successfully.")
 except Exception as e:
@@ -49,13 +51,6 @@ def parse_and_chunk_text(content):
     chunks = text_splitter.split_text(content.decode("utf-8"))
     return [{"content": chunk, "file": "uploaded_text.txt"} for chunk in chunks]
 
-def parse_and_chunk_image(file_path):
-    logging.info(f"Parsing and chunking image: {file_path}")
-    text = pytesseract.image_to_string(Image.open(file_path))
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    chunks = text_splitter.split_text(text)
-    return [{"content": chunk, "file": file_path} for chunk in chunks]
-
 # Generic endpoint to add data to Pinecone
 @add_data_endpoint.post("/add_data")
 def add_data_to_pinecone(file: UploadFile = File(...)):
@@ -77,8 +72,6 @@ def add_data_to_pinecone(file: UploadFile = File(...)):
             parsed_content = parse_and_chunk_pdf(temp_path)
         elif file_extension in [".txt"]:
             parsed_content = parse_and_chunk_text(content)
-        elif file_extension in [".jpg", ".png"]:
-            parsed_content = parse_and_chunk_image(temp_path)
         else:
             logging.warning("Unsupported file type.")
             raise HTTPException(status_code=400, detail="Unsupported file type.")

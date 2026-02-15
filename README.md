@@ -12,23 +12,28 @@ This project implements a chatbot for customers using Retrieval-Augmented Genera
 - [How It Works](#how-it-works)
 - [Future Improvements](#future-improvements)
 
-
 ## Features
 
-* Upload Documents: Admins can upload files (PDF, text, or images) to enhance the chatbot's knowledge base.
-* Question Answering: Users can ask questions, and the chatbot retrieves relevant document chunks using Pinecone, generates embeddings using OpenAI, and provides context-aware answers.
-* Streamlit UI: Interactive user and admin interfaces for uploading files and interacting with the chatbot.
-* API-Based Backend: FastAPI endpoints for managing data and handling chatbot queries.
-* Containerized Deployment: Dockerized services for backend and frontend.
+- Query Model : ChatGPT 4.1
+- Embedding Model : OpenAI's text-embedding-3-small
+- Upload Documents: Admins can upload files (PDF, text, or images) to enhance the chatbot's knowledge base.
+- Question Answering: Users can ask questions, and the chatbot retrieves relevant document chunks using Pinecone, generates embeddings using OpenAI, and provides context-aware answers.
+- Streamlit UI: Interactive user and admin interfaces for uploading files and interacting with the chatbot.
+- API-Based Backend: FastAPI endpoints for managing data and handling chatbot queries.
+- Containerized Deployment: Dockerized services for backend and frontend.
 
 ## Installation
+
 1. Clone the Repository
+
 ```bash
 git clone git@github.com:umarsaeedcheema/ResolveAI.git
 cd ResolveAI
 ```
+
 2. Create a virtual environment
-``` bash
+
+```bash
 python3 -m venv rag-bot
 source rag-bot/bin/activate  # For Linux/macOS
 rag-bot\Scripts\activate     # For Windows
@@ -36,14 +41,16 @@ rag-bot\Scripts\activate     # For Windows
 
 3. Install Required Packages
 
-Go into app and streamlit_ui folders and run : 
-``` bash
+Go into app and streamlit_ui folders and run :
+
+```bash
 pip install -r requirements.txt
 ```
 
 4. Setup API Keys
 
 Copy .env.example to .env
+
 ```bash
 cp .env.example .env
 ```
@@ -62,10 +69,13 @@ pinecone_index_name=your_pinecone_index_name_here
 1. Run Locally
 
 Backend:
+
 ```bash
 uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 ```
+
 Frontend:
+
 ```bash
 streamlit run streamlit_app/main.py
 ```
@@ -73,26 +83,31 @@ streamlit run streamlit_app/main.py
 2. Run with Docker
 
 Build and start the containers:
+
 ```bash
 docker-compose up --build
 ```
+
 3. Access the services:
 
-* Backend: http://localhost:8000
+- Backend: http://localhost:8000
 
-* Frontend: http://localhost:8501
+- Frontend: http://localhost:8501
 
 ## API Endpoints
 
 1. Add Data
-* Endpoint: POST /add_data
-* Description: Uploads a file (PDF, text, or image) and adds its content to Pinecone after preprocessing and chunking.
+
+- Endpoint: POST /add_data
+- Description: Uploads a file (PDF, text, or image) and adds its content to Pinecone after preprocessing and chunking.
 
 2. Query Chatbot
-* Endpoint: POST /query
-* Description: Accepts a user query, retrieves relevant content from Pinecone, and generates a response using OpenAI GPT.
+
+- Endpoint: POST /query
+- Description: Accepts a user query, retrieves relevant content from Pinecone, and generates a response using OpenAI GPT.
 
 ## Project Structure
+
 ```
 project_root/
   ├── app/
@@ -119,23 +134,22 @@ project_root/
 
 ### Document Upload:
 
-* Admins upload files (PDFs, text, or images) via the Streamlit admin page or POST /add_data endpoint.
+- Admins upload files (PDFs, text, or images) via the Streamlit admin page or POST /add_data endpoint.
 
-* Files are preprocessed, chunked, and stored in Pinecone with metadata.
+- Files are preprocessed, chunked, and stored in Pinecone with metadata.
 
 ### Query Handling:
-* Users enter queries via the Streamlit chatbot page or POST /query endpoint.
 
-* Pinecone retrieves relevant chunks, and OpenAI GPT generates a context-aware response.
+- Users enter queries via the Streamlit chatbot page or POST /query endpoint.
+
+- Pinecone retrieves relevant chunks, and OpenAI GPT generates a context-aware response.
 
 ### Frontend and Backend Communication:
 
-* The Streamlit app interacts with the FastAPI backend using REST APIs.
-
+- The Streamlit app interacts with the FastAPI backend using REST APIs.
 
 ## Future Improvements
 
-* Add support for more file types.
+- Add support for more file types.
 
-* Enhance the admin interface with file management capabilities.
-
+- Enhance the admin interface with file management capabilities.

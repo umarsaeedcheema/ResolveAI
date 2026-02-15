@@ -5,7 +5,8 @@ uvicorn
 # Embedding and vector search
 langchain==0.0.208
 openai==0.27.4
-pinecone-client==2.2.2
+pinecone==3.2.2
+langchain-pinecone==0.1.0
 
 # Configuration and environment management
 pydantic

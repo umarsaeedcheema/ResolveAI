@@ -24,7 +24,7 @@ def health_check():
         # Test OpenAI API key
         logging.info("Testing OpenAI API key...")
         embeddings = OpenAIEmbeddings(openai_api_key=settings.openai_api_key)
-        test_embedding = embeddings.embed_query("health check")
+        embeddings.embed_query("health check")
         logging.info("OpenAI API key validation successful.")
 
         logging.info("All API connections are healthy.")

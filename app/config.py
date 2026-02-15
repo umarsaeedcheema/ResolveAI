@@ -1,6 +1,4 @@
-import os
 import logging
-import pinecone
 from pydantic import BaseSettings
 from pinecone import Pinecone
 

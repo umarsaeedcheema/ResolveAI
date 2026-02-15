@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 import logging
 from langchain.embeddings.openai import OpenAIEmbeddings
-from config import settings, pinecone, pinecone_index
+from config import settings, pinecone_index
 import openai
 from pydantic import BaseModel
 
@@ -84,7 +84,7 @@ def query_rag(request: QueryRequest):
         try:
             openai.api_key = settings.openai_api_key
             llm_response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4.1",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt},

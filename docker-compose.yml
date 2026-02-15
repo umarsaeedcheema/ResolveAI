@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -25,7 +23,7 @@ services:
       - backend
     environment:
       - STREAMLIT_SERVER_PORT=8501
-      - BACKEND_URL=http://backend:8000  # Pass backend URL as an environment variable
+      - BACKEND_URL=http://backend:8000 # Pass backend URL as an environment variable
     networks:
       - app-network
 
